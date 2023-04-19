@@ -1,0 +1,11 @@
+# SonarLint plugin and more
+/.idea
+
+# Logger:
+*.log
+
+# Environments
+/venv
+.env
+
+/dialogs
