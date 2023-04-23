@@ -8,21 +8,18 @@ import dotenv
 name = __name__
 _log = logging.getLogger(name)
 _log.setLevel(logging.DEBUG)
-
 _log_handler = logging.FileHandler(filename=f'{name}.log',
                                    encoding='utf-8',
                                    mode="a")
 _log_formatter = logging.Formatter("%(asctime)s %(levelname)s %(name)s %(message)s")
 _log_handler.setFormatter(_log_formatter)
-
 _log.addHandler(_log_handler)
 
-openai.api_key = dotenv.get_key(dotenv_path='.env', key_to_get='OPENAI_API_KEY')
-model_engine: str = dotenv.get_key(dotenv_path='.env', key_to_get='MODEL_ENGINE')
-max_tokens: int = int(dotenv.get_key(dotenv_path='.env', key_to_get='MAX_TOKENS'))
+openai.api_key = dotenv.get_key('.env', 'OPENAI_API_KEY')
+model_engine = dotenv.get_key('.env', 'MODEL_ENGINE')
+max_tokens = int(dotenv.get_key('.env', 'MAX_TOKENS'))
 
 max_prompts = 5
-
 prompt = [
     {"role": "system", "content": "You’re a kind helpful assistant"}
 ]
@@ -88,6 +85,9 @@ if __name__ == '__main__':
             _prompt_correction()
     except KeyboardInterrupt:
         _save_dialog(_dialog=dialog_)
+        exit()
+    except Exception as er:
+        _log.error(er)
         exit()
 
 # def _translater(content_):
